@@ -1,0 +1,36 @@
+https://leetcode.com/problems/count-and-say/description/
+
+class Solution {
+    public String countAndSay(int n) {
+        int count=0;
+        
+        if(n==1){
+            return "1";
+        }
+        
+        StringBuilder number =new StringBuilder();
+        StringBuilder newnumber=new StringBuilder("1");
+        while(n>=1){
+            number=newnumber;
+	 	    newnumber=new StringBuilder(); 
+               
+            for(int i =0; i< number.length();i++){
+                count++;
+                if(i !=number.length() -1 &&  number.charAt(i) != number.charAt(i+1)){
+                   newnumber.append(count).append(number.charAt(i));
+                   count=0;
+                }
+                else if (i ==number.length() -1){
+                   newnumber.append(count).append(number.charAt(i));
+                     break;                   
+                }
+            }
+            n--;
+            count=0;
+        }   
+        return number.toString();
+    }
+        
+    
+    
+}
