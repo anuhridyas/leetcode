@@ -1,0 +1,27 @@
+https://leetcode.com/problems/happy-number/description/ 
+
+class Solution {
+    public boolean isHappy(int n) {
+        int rem=0;
+        int sum =0;
+        HashSet<Integer> m =new HashSet<Integer>();    
+        if(n ==1){
+            return true;
+        }
+        
+        while(n !=1 ){
+            if(!m.add(n)){
+              return false;  
+            }
+            while(n >0){
+                 rem =n%10;
+                n=n/10;
+                sum+=Math.pow(rem,2);
+                
+            }
+            n=sum;
+            sum=0;
+         }
+        return  true;
+    }
+}
