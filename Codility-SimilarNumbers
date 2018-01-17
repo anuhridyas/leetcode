@@ -1,0 +1,76 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.TreeMap;
+
+public class Demo {
+    HashMap<Integer,Integer> factorialMap=new HashMap<>();
+
+    public   int  countNumberofDigits(int N){
+        int count=0;
+        while(N>0){
+            N=N/10;
+            count++;
+        }
+         return count;
+    }
+
+
+    public TreeMap<Integer,Integer> findDuplicateCount(int N){
+        TreeMap<Integer,Integer> map=new TreeMap<>();
+        while(N>0){
+            int remainder=N%10;
+            if(map.containsKey(remainder)){
+                map.put(remainder,map.get(remainder)+1);
+            }else{
+                map.put(remainder,1);
+            }
+            N/=10;
+        }
+        return map;
+    }
+
+
+    public  int factorial(int N){
+        if(N==0 || N==1 ){
+            factorialMap.put(N,1);
+        }
+        if(factorialMap.containsKey(N)){
+            return factorialMap.get(N);
+        }
+
+        factorialMap.put(N,N*factorial(N-1));
+
+        return  factorialMap.get(N);
+    }
+
+
+    public  int similarPermutationCount(int N){
+
+        int totalNoofDigits=countNumberofDigits(N);
+        TreeMap<Integer,Integer> map = findDuplicateCount(N);
+        int TotalDuplicates=1, factorialOfTotalNumberOfDigits = factorial(totalNoofDigits);
+        for(int i :map.values()){
+            TotalDuplicates*= factorialMap.get(i);
+        }
+        if(!map.containsKey(0)){
+            return factorialOfTotalNumberOfDigits/TotalDuplicates;
+        }else{
+            int zeroCount =map.get(0);
+            int zeroFirstDigitTotal=factorialMap.get(totalNoofDigits-1)/(TotalDuplicates/zeroCount);
+            return (factorialOfTotalNumberOfDigits/TotalDuplicates)-zeroFirstDigitTotal;
+        }
+
+
+   }
+
+
+
+    public static void main (String[] args){
+
+        int n =1120;
+        Demo d =new Demo();
+         System.out.println(d.similarPermutationCount(n));
+
+
+    }
+}
