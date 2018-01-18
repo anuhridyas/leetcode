@@ -1,0 +1,30 @@
+https://leetcode.com/problems/symmetric-tree/description/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+      return  isSymmetic(root,root);
+      
+    }
+    
+    public boolean isSymmetic(TreeNode root1,TreeNode root2){
+        if(root1==null && root2==null){
+            return true;
+        }else if((root1==null && root2!=null)||((root1!=null && root2==null))){
+            return false;}
+        else if(root1.val!=root2.val){
+                return false;
+        }
+        else if(root1.val==root2.val){
+               return isSymmetic (root1.left,root2.right) && isSymmetic (root1.right,root2.left);
+            }return false;
+        }
+    }
