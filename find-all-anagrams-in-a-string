@@ -1,0 +1,44 @@
+https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
+
+Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        Map<Character ,Integer> map =new HashMap<>();
+        
+        fillMap(p,map);
+        int length = p.length();
+        int currentLength=0;
+        List<Integer> result =new ArrayList<>();
+        
+        for(int i =0 ; i<s.length();i++){
+             currentLength=0;
+             Map<Character, Integer> hmap = new HashMap<>();
+             hmap.putAll(map);
+            for(int j =i ; j < s.length() ;j++ )
+            { 
+                if(currentLength < length && !hmap.containsKey(s.charAt(j))   ){
+                    break;
+                } else if(hmap.containsKey(s.charAt(j))  && hmap.get(s.charAt(j))==0 ){
+                    break;
+                }
+                else if(hmap.containsKey(s.charAt(j))  ){
+                    currentLength++;
+                    hmap.put(s.charAt(j),map.get(s.charAt(j))-1);
+                    if(currentLength ==length){
+                        result.add(i);
+                    }
+                    
+                }
+                
+            }
+        }
+        return result;
+        
+    }
+    
+    
+    private  void fillMap(String p,Map<Character,Integer> map){
+        for(int i =0 ;i< p.length() ;i++){
+            map.put(p.charAt(i), map.getOrDefault(p.charAt(i),0)+1);
+        }
+    }
+}
