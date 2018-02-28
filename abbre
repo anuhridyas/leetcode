@@ -1,0 +1,32 @@
+class Decompres {
+    public boolean validWordAbbreviation(String word, String abbr) {
+
+        if(abbr.length() > word.length() ){
+            return false;
+        }
+        int i =0;
+        int j =0;
+        while(i< abbr.length() && j < word.length()){
+            if(Character.isLetter(abbr.charAt(i))){
+                if(abbr.charAt(i) !=word.charAt(j) ){
+                    return false;
+                }
+                i++;j++;
+            }
+            else if(Character.isDigit(abbr.charAt(i))){
+                int k =i;
+                int num =0;
+                while(k< abbr.length() &&  Character.isDigit(abbr.charAt(k))){
+                    num =num*10+Integer.valueOf(abbr.charAt(k));
+                    k++;
+                }
+                i=i+num;
+                j = k;
+            }
+        }
+        if(i==abbr.length()&& j == word.length()){
+            return true;
+        }
+        return false;
+    }
+}
