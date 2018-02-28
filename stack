@@ -1,0 +1,60 @@
+import java.util.Arrays;
+
+public class Stack <T extends Object>{
+     private T[] stack ;
+     private int size;
+     private int top ;
+
+     public Stack(int size){
+         this.top =-1;
+         this.size=size;
+         this.stack=(T[]) new Object[size];
+     }
+
+     public  void push(T val){
+         if(top ==size-1){
+             stack = Arrays.copyOf(stack,size*2);
+             size*=2;
+         }
+         stack[top+1]=val;
+         top++;
+         return ;
+     }
+
+
+     public boolean isEmpty(){
+         if(top ==-1){
+             return  true;
+         }
+         return false;
+     }
+
+
+     public  T pop(){
+        if(top ==-1 ){
+            throw   new RuntimeException("Stack is empty");
+        }
+        T temp=stack[top];
+        top--;
+
+        return  temp;
+
+     }
+
+
+     public static  void main (String[] args) {
+         Stack<Integer> stack = new Stack<>(10);
+         for (int i = 1; i < 12; i++){
+             stack.push(i);
+         }
+
+         System.out.println(stack.isEmpty());
+
+         for(int i =12 ; i >5 ; i-- ){
+             System.out.println(stack.pop());
+         }
+
+     }
+
+}
+
