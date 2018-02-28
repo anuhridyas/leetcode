@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class CustomHashMap<K,V> {
+    int size;
+    Entry<K,V>[] mapArray;
+    int currentSize ;
+
+    static class Entry<K,V>{
+        K key;
+        V value;
+        Entry<K,V> next;
+
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+            this.next =null;
+        }
+    }
+
+    public CustomHashMap() {
+        this.size = 16;
+        this.mapArray = new Entry[size];
+        this.currentSize=-1;
+    }
+
+
+    public V getValue(K key){
+       int hashCode =key.hashCode();
+       int bucketLocation =hash(hashCode);
+       if(mapArray[bucketLocation] ==null){
+           return null;
+       }
+       Entry<K,V> entry=mapArray[bucketLocation];
+       while (entry !=null){
+           if(entry.key.equals(key)){
+               return entry.value;
+           }
+           entry =entry.next;
+       }
+     return null;
+   }
+
+
+    public void put(K key,V value){
+        int hashCode =key.hashCode();
+        int bucketLocation =hash(hashCode);
+        Entry prev =null;
+        if(mapArray[bucketLocation]==null){
+           Entry<K,V> entry =new Entry<>(key,value);
+            mapArray[bucketLocation]=entry;
+        }
+        Entry<K,V> entry =mapArray[bucketLocation];
+        while(entry!=null){
+            if(entry.key.equals(key)){
+                entry.value=value;
+                return;
+            }else {
+                prev=entry;
+                entry =entry.next;
+            }
+
+        }
+        Entry<K,V> entryValue =new Entry<>(key,value);
+        prev.next=entryValue;
+        return ;
+    }
+
+    public int hash(int hashCode){
+        return hashCode %size;
+    }
+}
