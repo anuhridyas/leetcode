@@ -1,0 +1,80 @@
+import java.util.Arrays;
+
+public class ArrayListCustom<T extends Object> {
+    public int size;
+    private T[] array;
+    private int currSize;
+
+
+    public ArrayListCustom(int size) {
+        this.size = size;
+        this.array = (T[]) new Object[size];
+        this.currSize = -1;
+    }
+
+
+    public int getSize() {
+        return currSize+1;
+    }
+
+    public void add(T value) {
+        if (currSize == size-1) {
+            array = Arrays.copyOf(array, size * 2);
+            size*=2;
+        }
+        array[currSize + 1] = value;
+        currSize++;
+
+    }
+
+
+    public T getElement(int pos) {
+        if (pos > currSize || pos<0) {
+            throw new RuntimeException("Invalid position");
+        }
+        return array[pos];
+    }
+
+    public  void setContent(int pos , T val){
+        if(pos<0 || pos >currSize){
+            throw new RuntimeException("Invalid position");
+        }
+        array[pos]=val;
+    }
+
+
+    public T remove(int  pos){
+        if(pos<0 || pos >currSize){
+            throw new RuntimeException("Invalid position");
+        }
+        T temp =array[pos];
+        for(int i =pos ; i < currSize ; i++){
+            array[pos]=array[pos+1];
+        }
+        currSize--;
+        return temp;
+
+    }
+
+
+    public static void main(String a[]){
+        ArrayListCustom<Integer> mal = new ArrayListCustom(3);
+        mal.add(new Integer(2));
+        mal.add(new Integer(5));
+        mal.add(new Integer(1));
+        mal.add(new Integer(23));
+        mal.add(new Integer(14));
+        for(int i=0;i<mal.getSize();i++){
+            System.out.print(mal.getElement(i)+" ");
+        }
+        mal.add(new Integer(29));
+        System.out.println("Element at Index 5:"+mal.getElement(5));
+        System.out.println("List size: "+mal.getSize());
+        System.out.println("Removing element at index 2: "+mal.remove(2));
+        for(int i=0;i<mal.getSize();i++){
+            System.out.print(mal.getElement(i)+" ");
+        }
+    }
+
+
+}
